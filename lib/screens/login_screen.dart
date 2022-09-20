@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone_app/resources/auth_methods.dart';
+import 'package:instagram_clone_app/screens/sign_up_screen.dart';
 import 'package:instagram_clone_app/utils/colors.dart';
 import 'package:instagram_clone_app/widgets/text_field_input.dart';
 
@@ -28,19 +29,21 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       isLoading = true;
     });
-    String res = await AuthMethods().loginUser(email: _emailController.text, password: _passwordController.text).then((value){
-       //ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('SuccessFully Logged In'),),);
-       //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen(),));
-       
-       return value.length.toString();
+    String res = await AuthMethods()
+        .loginUser(
+            email: _emailController.text, password: _passwordController.text)
+        .then((value) {
+      //ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('SuccessFully Logged In'),),);
+      //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen(),));
+
+      return value.length.toString();
     });
     setState(() {
       isLoading = false;
     });
-    if(res == 'success'){
+    if (res == 'success') {
       //
-    }
-    else{
+    } else {
       // ignore: use_build_context_synchronously
       //showSnackBar(context, res);
     }
@@ -68,35 +71,35 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 62,
                   color: primaryColor,
                 ),
-              
+
                 const SizedBox(
                   height: 64,
                 ),
-              
+
                 //email TextField
                 TextFieldInput(
                     textEditingController: _emailController,
                     textInputType: TextInputType.emailAddress,
                     hintText: 'Enter Your Email'),
-              
+
                 const SizedBox(
                   height: 20,
                 ),
-              
+
                 //password TextField
                 TextFieldInput(
                     textEditingController: _passwordController,
                     textInputType: TextInputType.text,
                     isPass: true,
                     hintText: 'Enter Your Password'),
-              
+
                 const SizedBox(
                   height: 30,
                 ),
                 //TextButton
-              
+
                 InkWell(
-                  onTap:loginUser,
+                  onTap: loginUser,
                   child: Container(
                     width: double.infinity,
                     alignment: Alignment.center,
@@ -108,11 +111,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         color: Colors.blue),
-                    child: isLoading ? const CircularProgressIndicator(color: primaryColor,) :const Text('Login'),
+                    child: isLoading
+                        ? const CircularProgressIndicator(
+                            color: primaryColor,
+                          )
+                        : const Text('Login'),
                   ),
                 ),
                 // transition to signUp
-              
+
                 const SizedBox(
                   height: 130,
                 ),
@@ -120,12 +127,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 //   flex: 2,
                 //   child: Container(),
                 // ),
-              
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                      onTap: (){},
+                      onTap: () {},
                       child: Container(
                         decoration: const BoxDecoration(),
                         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -136,7 +143,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 5,
                     ),
                     GestureDetector(
-                      onTap: (){},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignUpScreen(),
+                          ),
+                        );
+                      },
                       child: Container(
                         decoration: const BoxDecoration(),
                         padding: const EdgeInsets.symmetric(vertical: 8),

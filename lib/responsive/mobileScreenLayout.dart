@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone_app/utils/colors.dart';
+import 'package:instagram_clone_app/utils/global_variables.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -44,27 +45,10 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        controller: pageController,
-        onPageChanged: onPageChanged,
-        // ignore: prefer_const_literals_to_create_immutables
-        children: [
-          const Center(
-            child: Text('Feed'),
-          ),
-          const Center(
-            child: Text('Search'),
-          ),
-          const Center(
-            child: Text('Add Post'),
-          ),
-          const Center(
-            child: Text('Notification'),
-          ),
-          const Center(
-            child: Text('Profile'),
-          ),
-        ],
-      ),
+          controller: pageController,
+          onPageChanged: onPageChanged,
+          // ignore: prefer_const_literals_to_create_immutables
+          children: homeScreenItems),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
         onTap: navigationTapped,
