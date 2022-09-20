@@ -1,7 +1,5 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:instagram_clone_app/providers/user_provider.dart';
 import 'package:instagram_clone_app/utils/dimensions.dart';
 import 'package:provider/provider.dart';
@@ -19,15 +17,13 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
     addData();
   }
 
   addData() async {
-    UserProvider _userProvider = Provider.of(context,listen: false);
-    await _userProvider.refreshUser();
+    UserProvider userProvider = Provider.of(context,listen: false);
+    await userProvider.refreshUser();
   }
   @override
   Widget build(BuildContext context) {

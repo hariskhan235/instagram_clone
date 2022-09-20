@@ -49,12 +49,12 @@ class User {
     var snap = snapshot.data() as Map<String, dynamic>;
 
     return User(
-        email: snapshot['email'],
-        uid: snapshot['uid'],
-        photoUrl: snapshot['photoUrl'],
-        username: snapshot['username'],
-        bio: snapshot['bio'],
-        followers: snapshot['followers'],
-        following: snapshot['following']);
+        email: snap['email'],
+        uid: snap['uid'],
+        photoUrl: snap['photoUrl'],
+        username: snap['username'],
+        bio: snap['bio'],
+        followers: snap['followers'],
+        following: snap['following']);
   }
 }

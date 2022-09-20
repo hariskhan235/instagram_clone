@@ -1,12 +1,5 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:instagram_clone_app/providers/user_provider.dart';
-import 'package:provider/provider.dart';
-import '../models/user.dart' as model;
+import 'package:instagram_clone_app/utils/colors.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -16,32 +9,98 @@ class MobileScreenLayout extends StatefulWidget {
 }
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-
   String username = '';
+  late PageController pageController;
+  int _page = 0;
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    pageController = PageController();
+  }
 
-  //   getUserName();
-  //   super.initState();
-  // }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    pageController.dispose();
+  }
 
-  // getUserName() async {
-  //  DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
+  void navigationTapped(int page) {
+    setState(() {
+      pageController.jumpToPage(page);
+    });
+  }
 
-  //  setState(() {
-  //    username = (snapshot.data() as Map<String,dynamic>)['username'];
-  //  });
-  //  //print(snapshot.data());
-  // }
+  void onPageChanged(int page) {
+    setState(() {
+      _page = page;
+    });
+    // print(page);
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    model.User user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
-      body: Center(
-        child: Text(user.username),
+      body: PageView(
+        controller: pageController,
+        onPageChanged: onPageChanged,
+        // ignore: prefer_const_literals_to_create_immutables
+        children: [
+          const Center(
+            child: Text('Feed'),
+          ),
+          const Center(
+            child: Text('Search'),
+          ),
+          const Center(
+            child: Text('Add Post'),
+          ),
+          const Center(
+            child: Text('Notification'),
+          ),
+          const Center(
+            child: Text('Profile'),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _page,
+        onTap: navigationTapped,
+        selectedItemColor: Colors.blue,
+        backgroundColor: mobileBackgroundColor,
+        items: [
+          BottomNavigationBarItem(
+              label: 'Home',
+              icon: Icon(Icons.home,
+                  color: _page == 0 ? Colors.blue : secondaryColor),
+              backgroundColor: primaryColor),
+          BottomNavigationBarItem(
+              label: 'Search',
+              icon: Icon(
+                Icons.search,
+                color: _page == 1 ? Colors.blue : secondaryColor,
+              ),
+              backgroundColor: primaryColor),
+          BottomNavigationBarItem(
+              label: 'Add',
+              icon: Icon(
+                Icons.add_circle,
+                color: _page == 2 ? Colors.blue : secondaryColor,
+              ),
+              backgroundColor: primaryColor),
+          BottomNavigationBarItem(
+              label: 'Favorites',
+              icon: Icon(Icons.favorite,
+                  color: _page == 3 ? Colors.blue : secondaryColor),
+              backgroundColor: primaryColor),
+          BottomNavigationBarItem(
+              label: 'Profile',
+              icon: Icon(Icons.person,
+                  color: _page == 4 ? Colors.blue : secondaryColor),
+              backgroundColor: primaryColor),
+        ],
       ),
     );
   }
