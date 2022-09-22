@@ -12,7 +12,8 @@ class AuthMethods {
   Future<model.User> getUserDetails() async {
     User currentUser = _firebaseAuth.currentUser!;
 
-    DocumentSnapshot documentSnapshot = await _firebaseFirestore.collection('users').doc(currentUser.uid).get();
+    DocumentSnapshot documentSnapshot =
+        await _firebaseFirestore.collection('users').doc(currentUser.uid).get();
 
     return model.User.fromSnap(documentSnapshot);
   }
@@ -52,7 +53,9 @@ class AuthMethods {
         await _firebaseFirestore
             .collection('users')
             .doc(userCredential.user!.uid)
-            .set(user.toJson());
+            .set(
+              user.toJson(),
+            );
 
         // await _firebaseFirestore.collection('users').add({
         //   'username': username,
