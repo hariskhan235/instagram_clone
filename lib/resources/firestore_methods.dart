@@ -85,4 +85,32 @@ class FirestoreMethods {
       );
     }
   }
+
+  Future<void> followUser(
+    String uid,
+    String followId,
+  ) async {
+    DocumentSnapshot snapshot =
+        await _firebaseFirestore.collection('users').doc(uid).get();
+    List following = (snapshot.data()! as dynamic)['following'];
+
+    if (following.contains(followId)) {
+      await _firebaseFirestore.collection('users').doc(followId).update({
+        'followers': FieldValue.arrayRemove([uid])
+      });
+
+      await _firebaseFirestore.collection('users').doc(uid).update({
+        'following': FieldValue.arrayUnion([uid])
+      });
+    }
+    else{
+      await _firebaseFirestore.collection('users').doc(followId).update({
+        'followers': FieldValue.arrayUnion([uid])
+      });
+
+      await _firebaseFirestore.collection('users').doc(uid).update({
+        'following': FieldValue.arrayUnion([uid])
+      });
+    }
+  }
 }
